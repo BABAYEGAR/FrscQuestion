@@ -1,0 +1,152 @@
+﻿@using FrscQuestion.Models
+@using FrscQuestion.Models.Enum
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="@(new AppConfig().GoogleClientId)">
+    <meta http-equiv="imagetoolbar" content="no"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Afriplugz | @ViewBag.Title</title>
+    <!-- Bootstrap -->
+    <link href="~/LandingTheme/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template style.css -->
+    <link rel="stylesheet" type="text/css" href="~/LandingTheme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/LandingTheme/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="~/LandingTheme/css/owl.theme.min.css">
+    <link rel="stylesheet" type="text/css" href="~/LandingTheme/css/owl.transitions.min.css">
+    <link rel="stylesheet" type="text/css" href="~/LandingTheme/css/fontello.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/site.min.css">
+    <!-- Font used in template -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,300" rel="stylesheet" type="text/css">
+    <!--font awesome icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- favicon icon -->
+    <link rel="shortcut icon" href="~/images/favicon.png"/>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="//code.jivosite.com/widget.js" data-jv-id="nX9nYufico" async></script>
+    <style>
+        img.lazy {
+            display: inline-block;
+            height: 270px;
+            width: 360px;
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        body{
+            width : 100% !important;
+        }
+    </style>
+    @RenderSection("Css", false)
+</head>
+
+<body>
+@{
+    await Html.RenderPartialAsync("LandingHeader");
+}
+@RenderBody()
+
+@{
+    await Html.RenderPartialAsync("LandingFooter");
+}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="~/LandingTheme/js/jquery.min.js" asp-append-version="true"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="~/LandingTheme/js/bootstrap.min.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+<!-- Flex Nav Script -->
+<script src="~/LandingTheme/js/jquery.flexnav.min.js" type="text/javascript" asp-append-version="true"></script>
+<script src="~/LandingTheme/js/navigation.min.js" asp-append-version="true"></script>
+<!-- slider -->
+<script src="~/LandingTheme/js/owl.carousel.min.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/LandingTheme/js/slider.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8" asp-append-version="true"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js" asp-append-version="true"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js" asp-append-version="true"></script>
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer asp-append-version="true"></script>
+<script>
+    // Signout function
+    function signOut() {
+        const auth2 = window.gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function() {
+            location.href = "@Url.Action("LogOut", "Account")";
+        });
+
+    }
+
+    function renderButton() {
+        window.gapi.load('auth2',
+            function() {
+                window.gapi.auth2.init();
+            });
+    }
+</script>
+
+@if (TempData["display"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <script>
+            Swal.fire({
+                text: '@TempData["display"]',
+                type: 'success'
+            })
+        </script>
+    }
+    if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+    {
+        <script>
+            Swal.fire({
+                text: '@TempData["display"]',
+                type: 'error'
+            })
+        </script>
+    }
+    if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <script>
+            Swal.fire({
+                text: '@TempData["display"]',
+                type: 'info'
+            })
+        </script>
+    }
+}
+<script>
+    // When the user scrolls the page, execute myFunction
+    window.onscroll = function() { myFunction() };
+
+// Get the navbar
+    var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+    var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky");
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
+</script>
+<!-- sticky header -->
+@RenderSection("Script", false)
+</body>
+
+</html>

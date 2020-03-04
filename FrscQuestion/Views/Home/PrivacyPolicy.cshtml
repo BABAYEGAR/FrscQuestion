@@ -1,0 +1,54 @@
+﻿@model FrscQuestion.Models.Entities.PrivacyPolicy
+@{
+    ViewBag.Title = "Privacy Policy";
+    Layout = "_Layout";
+}
+<div class="tp-page-head" style="background: url(/images/banner7.jpg); background-size: cover;">
+    <!-- page header -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="page-header text-center">
+                    <div class="icon-circle">
+                        <i class="icon icon-size-60 icon-loving-home icon-white"></i>
+                    </div>
+                    <h1>Privacy Policy</h1>
+                    <p>Learn more about all privacy information management between Afriplugz and our customers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.page header -->
+<div class="tp-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="@Url.Action("Index")">Home</a>
+                    </li>
+                    <li class="active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 content-right">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aboutus">
+                            <h2>Privacy Policy (Last Updated : @Model?.DateLastModified.ToString("D"))</h2>
+                            <p>
+                                @Html.Raw(Model?.Text)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

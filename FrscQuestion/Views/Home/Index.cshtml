@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "_Layout";
+}
+@{
+    await Html.RenderPartialAsync("LandingSlider");
+}
+@{
+    await Html.RenderPartialAsync("LandingFeature");
+}
+@{
+    await Html.RenderPartialAsync("LandingEvent");
+}
+@{
+    await Html.RenderPartialAsync("LandingEventCategory");
+}
+@{
+    await Html.RenderPartialAsync("LandingSignUp");
+}

@@ -1,0 +1,41 @@
+﻿@model FrscQuestion.Models.Entities.Question
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Question";
+    ViewBag.PageTitle = "Add Question";
+}
+
+@section Css{
+    <link href="~/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet"/>
+}
+
+@section BreadCrumb{
+    <li>
+        <a href="@Url.Action("Index")">Questions</a>
+    </li>
+}
+
+@using (Html.BeginForm("Create", "Question", FormMethod.Post, new {@class = "form-horizontal", enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="form-group col-md-6">
+        @Html.LabelFor(model => model.QuestionValue, new {@class = "control-label"})<span class="required">*</span>
+        @Html.EditorFor(model => model.QuestionValue, new {htmlAttributes = new {@class = "form-control", placeholder = "Please enter the event title"}})
+        @Html.ValidationMessageFor(model => model.QuestionValue, "", new {@class = "text-danger"})
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(model => model.OffenseId, new {@class = "control-label"})<span class="required">*</span>
+        @Html.DropDownListFor(model => model.OffenseId, null, "Select Category", new {@class = "form-control"})
+        @Html.ValidationMessageFor(model => model.OffenseId, "", new {@class = "text-danger"})
+    </div>
+    <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-purple waves-effect waves-light">Submit</button>
+    </div>
+}
+
+@section Script
+{
+    <script src="~/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
+    <script src="~/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
+}

@@ -1,0 +1,46 @@
+﻿@model FrscQuestion.Models.Entities.AppUser
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Manage Profile";
+    ViewBag.PageTitle = "Update Profile Information";
+}
+<div class="col-md-12 m-t-50">
+    @using (Html.BeginForm("EditProfile", "User", FormMethod.Post, new {@class = "", enctype = "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        @Html.HiddenFor(m => m.AppUserId)
+        @Html.HiddenFor(m => m.Email)
+        @Html.HiddenFor(m => m.DateCreated)
+        @Html.HiddenFor(m => m.CreatedBy)
+        @Html.HiddenFor(m => m.ProfilePicture)
+        @Html.HiddenFor(m => m.Status)
+        @Html.HiddenFor(m => m.RoleId)
+        @Html.HiddenFor(m => m.Password)
+        @Html.HiddenFor(m => m.ConfirmPassword)
+        @Html.HiddenFor(m => m.HasSocialMediaLogin)
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.Name, new {@class = "control-label"})<span class="required">*</span>
+            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control", placeholder = "Please enter your name"}})
+            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.Email, new {@class = "control-label"})<span class="required">*</span>
+            @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control", disabled = "disabled", placeholder = "Please enter your email"}})
+            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.Mobile, new {@class = "control-label"})<span class="required">*</span>
+            @Html.EditorFor(model => model.Mobile, new {htmlAttributes = new {@class = "form-control", placeholder = "Please enter your mobile number"}})
+            @Html.ValidationMessageFor(model => model.Mobile, "", new {@class = "text-danger"})
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.Address, new {@class = "control-label"})<span class="required">*</span>
+            @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "form-control", placeholder = "Please enter your address"}})
+            @Html.ValidationMessageFor(model => model.Address, "", new {@class = "text-danger"})
+        </div>
+        <div class="form-group col-md-12">
+            <button type="submit" class="btn btn-purple waves-effect waves-light">Submit</button>
+        </div>
+    }
+</div>

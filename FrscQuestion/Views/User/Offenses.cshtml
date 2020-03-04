@@ -1,0 +1,47 @@
+﻿@model List<FrscQuestion.Models.Entities.Offense>
+@{
+    Layout = "_LayoutTable";
+    ViewBag.Title = "Ticket Order";
+    ViewBag.PageTitle = "List of Orders";
+}
+
+@section BreadCrumb{
+    <li>
+        <a href="@Url.Action("Payments", "User")">Payments</a>
+    </li>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <h4 class="m-t-0 header-title">
+                <b>@ViewBag.PageTitle</b>
+            </h4>
+
+            <table id="datatable" class="table table-striped table-colored table-info">
+                <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Offense</th>
+                    <th>Code</th>
+                    <th>Fine</th>
+                </tr>
+                </thead>
+
+
+                <tbody>
+                @foreach (var item in Model.OrderBy(n => n.DateCreated).ToList())
+                {
+                    <tr>
+                        <td></td>
+                        <td>@item.Name</td>
+                        <td>&#8358 @($"{item.Fine:n0}")</td>
+                   
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

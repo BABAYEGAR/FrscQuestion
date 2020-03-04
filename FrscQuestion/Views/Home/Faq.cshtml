@@ -1,0 +1,62 @@
+﻿@model List<FrscQuestion.Models.Entities.Faq>
+@{
+    ViewBag.Title = "FAQ";
+}
+    <div class="tp-page-head" style="background: url(/images/banner9.jpg); background-size: cover;">
+        <!-- page header -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="page-header text-center">
+                        <div class="icon-circle">
+                            <i class="icon icon-size-60 icon-book icon-white"></i>
+                        </div>
+                        <h1>Afriplugz FAQ</h1>
+                        <p>Learn More information about Afriplugz. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="tp-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="@Url.Action("Index")">Home</a>
+                    </li>
+                    <li class="active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main-container" class="main-container">
+    <!-- main container -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 st-accordion">
+
+                @foreach (var item in Model)
+        {
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne-@item.FaqId" aria-expanded="true" aria-controls="collapseOne-@item.FaqId">@item.Question</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne-@item.FaqId" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <p>@item.Answer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,151 @@
+﻿@model FrscQuestion.Models.Entities.Role
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Role & Permission";
+    ViewBag.PageTitle = "Edit Role";
+}
+
+    <div class="col-md-12 m-t-50">
+        @using (Html.BeginForm("Edit", "Role", FormMethod.Post, new { @class = "", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.RoleId)
+            @Html.HiddenFor(m => m.DateCreated)
+            @Html.HiddenFor(m => m.CreatedBy)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label" })<span class="required">*</span>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Please enter the category name" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <h3>Manage Children Permissions</h3>
+            <br />
+            <div class="form-inline">
+                <label>Content Management Permissions</label>
+                <br />
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.AccessAdminConsole)
+                    @Html.LabelFor(model => model.AccessAdminConsole)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ManageApplicationUser)
+                    @Html.LabelFor(model => model.ManageApplicationUser)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ManageAccessLogs)
+                    @Html.LabelFor(model => model.ManageAccessLogs)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ManageFaq)
+                    @Html.LabelFor(model => model.ManageFaq)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ManageTermsandCondition)
+                    @Html.LabelFor(model => model.ManageTermsandCondition)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.AddOffense)
+                    @Html.LabelFor(model => model.AddOffense)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.EditOffense)
+                    @Html.LabelFor(model => model.EditOffense)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.DeleteOffense)
+                    @Html.LabelFor(model => model.DeleteOffense)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ViewOffense)
+                    @Html.LabelFor(model => model.ViewOffense)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.AddQuestion)
+                    @Html.LabelFor(model => model.AddQuestion)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.EditQuestion)
+                    @Html.LabelFor(model => model.EditQuestion)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.DeleteQuestion)
+                    @Html.LabelFor(model => model.DeleteQuestion)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ViewQuestion)
+                    @Html.LabelFor(model => model.ViewQuestion)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.AddAnswer)
+                    @Html.LabelFor(model => model.AddAnswer)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.EditAnswer)
+                    @Html.LabelFor(model => model.EditAnswer)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.DeleteAnswer)
+                    @Html.LabelFor(model => model.DeleteAnswer)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ViewAnswer)
+                    @Html.LabelFor(model => model.ViewAnswer)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.AddBooking)
+                    @Html.LabelFor(model => model.AddBooking)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.EditBooking)
+                    @Html.LabelFor(model => model.EditBooking)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.DeleteBooking)
+                    @Html.LabelFor(model => model.DeleteBooking)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ViewBooking)
+                    @Html.LabelFor(model => model.ViewBooking)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.AddBookingOffense)
+                    @Html.LabelFor(model => model.AddBookingOffense)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.EditBookingOffense)
+                    @Html.LabelFor(model => model.EditBookingOffense)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.DeleteBookingOffense)
+                    @Html.LabelFor(model => model.DeleteBookingOffense)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ViewBookingOffense)
+                    @Html.LabelFor(model => model.ViewBookingOffense)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.PayBooking)
+                    @Html.LabelFor(model => model.PayBooking)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ManagePayments)
+                    @Html.LabelFor(model => model.ManagePayments)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ManagePrivacyPolicy)
+                    @Html.LabelFor(model => model.ManagePrivacyPolicy)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ManageRoles)
+                    @Html.LabelFor(model => model.ManageRoles)
+                </div>
+                <div class="checkbox checkbox-primary">
+                    @Html.CheckBoxFor(model => model.ManageSystemSetting)
+                    @Html.LabelFor(model => model.ManageSystemSetting)
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-purple waves-effect waves-light">Submit</button>
+            </div>
+        }
+    </div>

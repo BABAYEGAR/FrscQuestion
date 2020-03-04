@@ -1,0 +1,63 @@
+﻿@using FrscQuestion.Models.Entities
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@{
+    var appUser = new AppUser();
+
+    if (Context.Session.GetString("FrscQuestionLoggedInUser") != null)
+    {
+        var userString = Context.Session.GetString("FrscQuestionLoggedInUser");
+        appUser = JsonConvert.DeserializeObject<AppUser>(userString);
+    }
+}
+<div class="topbar">
+
+    <!-- LOGO -->
+    <div class="topbar-left">
+        <!-- Image logo -->
+        <a href="@Url.Action("Index", "Home")" class="logo">
+            <span>
+                <img src="~/images/adminLogoSmall.png" alt="" height="30">
+            </span>
+            <i>
+                <img src="~/images/adminLogoSmall.png" alt="" height="28">
+            </i>
+        </a>
+    </div>
+
+    <!-- Button mobile view to collapse sidebar menu -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="button-menu-mobile open-left waves-effect waves-light">
+                        <i class="mdi mdi-menu"></i>
+                    </button>
+                </li>
+            </ul>
+            <!-- Right(Notification) -->
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="dropdown user-box">
+                    <a href="" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
+                        <img src="@appUser.ProfilePicture" alt="user-img" class="img-circle user-img">
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
+                        <li>
+                            <h5>Hi, @appUser.Name</h5>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("EditProfile", "User")"><i class="ti-user m-r-5"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("LogOut", "Account")"><i class="ti-power-off m-r-5"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul> <!-- end navbar-right -->
+
+        </div><!-- end container -->
+    </div><!-- end navbar -->
+</div>

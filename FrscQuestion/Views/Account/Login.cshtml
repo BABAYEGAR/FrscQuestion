@@ -1,0 +1,152 @@
+﻿@using FrscQuestion.Models.Enum
+@model FrscQuestion.Models.Entities.AccountModel
+@{
+    ViewBag.Title = "Sign in";
+    Layout = "_LayoutAccount";
+}
+
+@section Css
+{
+    <style>
+        #my-signin2 {
+            height: 50px;
+            width: 0px;
+        }
+    </style>
+}
+
+<div class="m-t-40 account-pages">
+    <div class="text-center account-logo-box" style="background: white">
+        <h2 class="text-uppercase">
+            <a href="@Url.Action("Index", "Home")" class="text-success">
+                <span>
+                    <img src="~/images/adminLogo.png" alt="" height="36">
+                </span>
+            </a>
+        </h2>
+        <!--<h4 class="text-uppercase font-bold m-b-0">Sign In</h4>-->
+    </div>
+
+    <div class="account-content">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new {@class = "form-horizontal", enctype = "multipart/form-data", role = "form"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group">
+                <div class="col-xs-12">
+                    @Html.EditorFor(model => model.Email, null, new {htmlAttributes = new {@class = "form-control", placeholder = "Email Address"}})
+                    @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    @Html.PasswordFor(model => model.Password, new {@class = "form-control", placeholder = "Password"})
+                    <span class="view-pass">
+                        <i class="lotus-icon-view"></i>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="submit" style="background: #f48f00; color: white; font-size: 16px" class="btn btn-block btn-lg">Sign In<i class="fa fa-sign-in"></i></button>
+
+                    <br/>
+                    <span class="text-center" style="font-size: 12pt; font-weight: bold; margin-left: 50%; text-align: center;"> OR</span>
+                    <br/>
+                    <a id="my-signin2" class="text-center"></a>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+        }
+        <div class="clearfix"></div>
+
+    </div>
+</div>
+<!-- end card-box-->
+
+
+<div class="row m-t-50">
+    <div class="col-sm-12 text-center">
+        <p style="font-size: 14pt; font-weight: bold;" class="text-muted">
+            Don't have an account?
+            <a href="@Url.Action("Register")" class="text-primary m-l-5">
+                <b>Sign Up</b>
+            </a>
+        </p>
+    </div>
+</div>
+
+@section Script
+{
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer asp-append-version="true"></script>
+    <script>
+        //$("#fbButton").prop('disabled', true);
+        window.onbeforeunload = function(e) {
+            window.gapi.auth2.getAuthInstance().signOut();
+        };
+
+        function renderButton() {
+            window.gapi.signin2.render('my-signin2',
+                {
+                    'scope': 'profile email',
+                    'width': 'auto',
+                    'height': 50,
+                    'longtitle': true,
+                    'theme': 'dark',
+                    'onsuccess': onSuccess,
+                    'onfailure': onFailure
+                });
+        }
+    </script>
+    <script>
+        function onFailure(error) {
+        }
+
+    </script>
+    <script>
+
+        function onSuccess(googleUser) {
+            const profile = googleUser.getBasicProfile();
+            const form = $(document.createElement('form'));
+            $(form).attr('action', '/Account/Login');
+            $(form).attr("method", "POST");
+            const login = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "LoginName")
+                .val(profile.getEmail());
+            const email = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "Email")
+                .val(profile.getEmail());
+            const username = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "UserName")
+                .val(profile.getName());
+            const role = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "RoleId")
+                .val(2);
+            const loginType = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "LoginType")
+                .val('@(LoginType.Google.ToString())');
+            const image = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "ProfilePicture")
+                .val(profile.getImageUrl());
+            $(form).append($(login));
+            $(form).append($(email));
+            $(form).append($(username));
+            $(form).append($(role));
+            $(form).append($(loginType));
+            $(form).append($(image));
+            form.appendTo(document.body);
+            $(form).submit();
+        }
+
+    </script>
+
+
+}

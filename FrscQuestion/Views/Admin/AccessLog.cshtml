@@ -1,0 +1,56 @@
+﻿@model List<FrscQuestion.Models.Entities.AccessLog>
+@{
+    Layout = "_LayoutTable";
+    ViewBag.Title = "System Access Log";
+    ViewBag.PageTitle = "System Access Log";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <table id="datatable" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Log Date</th>
+                    <th>User</th>
+                    <th>Message</th>
+                    <th>Category</th>
+                    <th>Status</th>
+
+                </tr>
+                </thead>
+
+
+                <tbody>
+                @foreach (var item in Model.OrderBy(n => n.DateCreated).ToList())
+                {
+                    <tr>
+                        <td></td>
+                        <td>@item.DateCreated.ToString("F")</td>
+
+                        @if (item.AppUser != null)
+                        {
+                            <td>
+                                @item.AppUser.Name
+                            </td>
+                        }
+                        else
+                        {
+                            <td>N/A</td>
+                        }
+
+                        <td>@item.Message</td>
+                        <td>@item.Category</td>
+                        <td>@item.Status</td>
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Script {
+
+}

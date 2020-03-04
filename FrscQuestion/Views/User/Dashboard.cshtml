@@ -1,0 +1,142 @@
+﻿@using FrscQuestion.Models.Entities
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@model FrscQuestion.Models.Entities.AppTransport
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Dashboard";
+    var appUser = new AppUser();
+    if (Context.Session.GetString("FrscQuestionLoggedInUser") != null)
+    {
+        var userString = Context.Session.GetString("FrscQuestionLoggedInUser");
+        appUser = JsonConvert.DeserializeObject<AppUser>(userString);
+    }
+}
+
+<div class="row text-center">
+    @if (appUser.Role.ManageApplicationUser)
+    {
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="card-box widget-box-one">
+                <div class="wigdet-one-content">
+                    <p class="m-0 text-uppercase font-600 font-secondary text-overflow">Admin Users</p>
+                    <h2 class="text-danger">
+                        <span>@Model.AppUsers.Where(n => n.Role.ManageApplicationUser).ToList().Count</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+    }
+    @if (appUser.Role.ManageApplicationUser)
+    {
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="card-box widget-box-one">
+                <div class="wigdet-one-content">
+                    <p class="m-0 text-uppercase font-600 font-secondary text-overflow">Offenders</p>
+                    <h2 class="text-danger">
+                        <span>@Model.AppUsers.Where(n => n.Role.PayBooking).ToList().Count</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+    }
+    @if (appUser.Role.AddBooking)
+    {
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="card-box widget-box-one">
+                <div class="wigdet-one-content">
+                    <p class="m-0 text-uppercase font-600 font-secondary text-overflow">Bookings</p>
+                    <h2 class="text-danger">
+                        <span>@Model.Bookings.Count</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    }
+    @if (appUser.Role.PayBooking)
+    {
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="card-box widget-box-one">
+                <div class="wigdet-one-content">
+                    <p class="m-0 text-uppercase font-600 font-secondary text-overflow">Bookings</p>
+                    <h2 class="text-danger">
+                        <span>@Model.Bookings.Count</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    }
+    @if (appUser.Role.ManagePayments)
+    {
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="card-box widget-box-one">
+                <div class="wigdet-one-content">
+                    <p class="m-0 text-uppercase font-600 font-secondary text-overflow">Revenue</p>
+                    <h2 class="text-danger">
+                        <span>&#8358 @($"{Model?.Payments.Sum(n => n.Amount):n0}")</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+    }
+</div>
+
+<!-- end row -->
+
+
+<div class="row">
+    @if (appUser.Role.ManagePayments)
+    {
+        <div class="col-lg-12">
+            <div class="panel panel-color panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Recent Payments</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table table-hover m-0">
+                            <thead>
+                            <tr>
+                                <th>Payment REF</th>
+                                <th>Payment Gateway</th>
+                                <th>Payment Method</th>
+                                <th>Amount</th>
+                                <th>Customer</th>
+                            </tr>
+                            </thead>
+
+
+                            <tbody>
+                            @if (Model != null && Model.Payments != null)
+                            {
+                                foreach (var item in Model.Payments)
+                                {
+                                <tr>
+                                    <td>@item.Reference</td>
+                                    <td>@item.PaymentGateway</td>
+                                    <td>@item.PaymentMethod</td>
+                                    <td>&#8358 @($"{item.Amount:n0}")</td>
+                                    <td>
+                                        @if (item.AppUser != null)
+                                        {
+                                            @item.AppUser.Name
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+
+                            </tbody>
+                        </table>
+
+                    </div> <!-- table-responsive -->
+                </div>
+            </div>
+
+        </div>
+    }
+
+</div>

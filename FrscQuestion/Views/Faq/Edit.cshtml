@@ -1,0 +1,34 @@
+﻿@model FrscQuestion.Models.Entities.Faq
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "FAQ";
+    ViewBag.PageTitle = "Edit FAQ";
+}
+
+<div class="col-md-12 m-t-50">
+    @using (Html.BeginForm("Edit", "Faq", FormMethod.Post, new {enctype = "multipart/form-data", role = "form"}))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        @Html.HiddenFor(m => m.FaqId)
+        @Html.HiddenFor(m => m.DateCreated)
+        @Html.HiddenFor(m => m.CreatedBy)
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Question, new {@class = "control-label"})
+                @Html.TextAreaFor(model => model.Question, new {@class = "form-control", placeholder = "Please enter the question"})
+                @Html.ValidationMessageFor(model => model.Question, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Answer, new {@class = "control-label"})
+                @Html.TextAreaFor(model => model.Answer, new {@class = "form-control", placeholder = "Please enter the answer"})
+                @Html.ValidationMessageFor(model => model.Answer, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary pull-right">Submit</button>
+            <a href="@Url.Action("Index")" class="btn btn-default pull-right">Cancel</a>
+        </div>
+    }
+
+</div>

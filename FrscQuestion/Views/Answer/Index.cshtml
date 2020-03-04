@@ -1,0 +1,131 @@
+﻿@using FrscQuestion.Models.Entities
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@model List<FrscQuestion.Models.Entities.Answer>
+@{
+    Layout = "_LayoutTable";
+    ViewBag.Title = "Question Answers";
+    ViewBag.PageTitle = "List of Answers";
+    long questionId = ViewBag.QuestionId;
+    var authorizedUser = new AppUser();
+    if (Context.Session.GetString("FrscQuestionLoggedInUser") != null)
+    {
+        var userString = Context.Session.GetString("FrscQuestionLoggedInUser");
+        authorizedUser = JsonConvert.DeserializeObject<AppUser>(userString);
+    }
+}
+
+@section BreadCrumb{
+    <li>
+        <a href="@Url.Action("Create", "Question")">Add Question</a>
+    </li>
+    <li>
+        <a href="@Url.Action("Index", "Question")">Questions</a>
+    </li>
+    <li>
+        <a href="@Url.Action("Create", new {id = questionId})">Add Answer</a>
+    </li>
+
+}
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete @ViewBag.Title</h4>
+            </div>
+            @using (Html.BeginForm("Delete", "Answer"))
+            {
+                <input type="hidden" id="id" name="Id"/>
+                <div class="modal-body">
+
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to delete the @ViewBag.Title?
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                    <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group">
+            <a href="@Url.Action("Create", new {id = questionId})" class="btn btn-primary pull-left" data-toggle="tooltip" title="Add Category">
+                Add New
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <h4 class="m-t-0 header-title">
+                <b>@ViewBag.PageTitle</b>
+            </h4>
+
+            <table id="datatable" class="table table-striped table-colored table-info">
+                <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Date Added</th>
+                    <th>Answer</th>
+                    <th>Correct Option?</th>
+                    <th>Sold Tickets</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@item.DateCreated.ToString("D")</td>
+                        <td>@item.AnswerValue</td>
+                        <td>@item.CorrectAnswer</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    @if (authorizedUser.Role.EditAnswer)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Edit", "Answer", new {id = item.AnswerId})" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Details & Edit the Answer">
+                                                Edit <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (authorizedUser.Role.DeleteAnswer)
+                                    {
+                                        <li>
+                                            <a class="btn btn-danger btn-sm loadModal3" href="#" data-toggle="tooltip modal" title="Delete Answer" data-id="@item.AnswerId">
+                                                <i class="fa fa-trash"></i>Delete Answer
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

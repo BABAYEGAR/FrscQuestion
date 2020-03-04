@@ -1,0 +1,148 @@
+﻿@using FrscQuestion.Models.Entities
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@{
+    var appUser = new AppUser();
+    if (Context.Session.GetString("FrscQuestionLoggedInUser") != null)
+    {
+        var userString = Context.Session.GetString("FrscQuestionLoggedInUser");
+        appUser = JsonConvert.DeserializeObject<AppUser>(userString);
+    }
+}
+<div class="left side-menu">
+    <div class="sidebar-inner slimscrollleft">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            @if (appUser?.Role != null && appUser.Role.AccessAdminConsole)
+            {
+                <ul>
+                    <li class="has_sub">
+                        <a href="@Url.Action("Dashboard", "User")" class="waves-effect">
+                            <i class="mdi mdi-view-dashboard"></i><span> Dashboard </span>
+                        </a>
+                    </li>
+                    @if (appUser.Role.ManageApplicationUser || appUser.Role.ManageRoles || appUser.Role.ManageAccessLogs)
+                    {
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
+                                <i class="mdi mdi-human-male-female"></i> <span>User Management </span> <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="list-unstyled">
+                                @if (appUser.Role.ManageAccessLogs)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("AccessLog", "Admin")">Access Logs</a>
+                                    </li>
+                                }
+                                @if (appUser.Role.ManageApplicationUser)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Create", "AppUser")">Add User</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "AppUser")">View Users</a>
+                                    </li>
+                                }
+                                @if (appUser.Role.ManageRoles)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Create", "Role")">Add Role</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "Role")">View Roles</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (appUser.Role.ManagePrivacyPolicy || appUser.Role.ManageTermsandCondition || appUser.Role.ManageSystemSetting || appUser.Role.ManageFaq)
+                    {
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
+                                <i class="mdi mdi-settings"></i> <span>Settings Management </span> <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="list-unstyled">
+                                @if (appUser.Role.ManageSystemSetting)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("AppCredential", "Page")">Manage App Credentials</a>
+                                    </li>
+                                }
+                                @if (appUser.Role.ManageFaq)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index", "Faq")">Manage FAQ</a>
+                                    </li>
+                                }
+                                @if (appUser.Role.ManageTermsandCondition)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Terms", "Page")">Manage Terms</a>
+                                    </li>
+                                }
+                                @if (appUser.Role.ManagePrivacyPolicy)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("PrivacyPolicy", "Page")">Manage Privacy Policy</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @if (appUser.Role.ViewAnswer || appUser.Role.AddAnswer || appUser.Role.AddQuestion || appUser.Role.ViewQuestion)
+                    {
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
+                                <i class="mdi mdi-comment-question-outline"></i> <span>Questions & Answers </span> <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="list-unstyled">
+                                @if (appUser.Role.AddQuestion)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Create", "Question")">Add Question</a>
+                                    </li>
+                                }
+                                @if (appUser.Role.ViewQuestion || appUser.Role.AddAnswer || appUser.Role.ViewAnswer)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index", "Question")">View Questions</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (appUser.Role.ViewOffense || appUser.Role.AddOffense)
+                    {
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
+                                <i class="mdi mdi-weight"></i> <span>Offenses </span> <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="list-unstyled">
+                                @if (appUser.Role.AddOffense)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Create", "Offense")">Add Offense</a>
+                                    </li>
+                                }
+                                @if (appUser.Role.ViewOffense)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index", "Offense")">View Offenses</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+
+                </ul>
+            }
+        </div>
+        <!-- Sidebar -->
+        <div class="clearfix"></div>
+    </div>
+    <!-- Sidebar -left -->
+
+</div>
